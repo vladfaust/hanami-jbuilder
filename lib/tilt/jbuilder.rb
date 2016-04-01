@@ -1,5 +1,6 @@
 require 'tilt'
 require 'jbuilder'
+require 'hanami-view'
 
 module Tilt
   class Jbuilder < ::Jbuilder
@@ -89,6 +90,12 @@ module Tilt
 
     def evaluate(scope, locals, &block)
       scope ||= Object.new
+      if scope.class == Hanami::View::Rendering::Scope
+        locals = locals.merge(scope.locals) if scope
+        scope = Object.new
+      else
+        scope ||= Object.new
+      end
       ::Tilt::Jbuilder.encode(scope) do |json|
         context = scope.instance_eval { binding }
         set_locals(locals, scope, context)
