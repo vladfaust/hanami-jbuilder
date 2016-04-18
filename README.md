@@ -14,7 +14,16 @@ And then execute:
 
 ## Usage
 
-Just add a *.json.jbuilder file near the other ones and it'll work!
+1. `require 'tilt/jbuilder'` somewhere
+2. Remove rendering layout or it will override your *.json.jbuilder files!
+```ruby
+module Api
+  class Application < Hanami::Application
+    configure do
+      # The layout to be used by all views
+      # layout :application # COMMENT IT
+```
+3. Just add *.json.jbuilder files in templates directory and it'll work
 
 ## Contributing
 1. Fork it
