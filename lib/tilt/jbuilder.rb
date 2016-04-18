@@ -89,8 +89,7 @@ module Tilt
     def prepare; end
 
     def evaluate(scope, locals, &block)
-      scope ||= Object.new
-      if scope.class == Hanami::View::Rendering::Scope
+      if scope.class <= Hanami::View::Rendering::LayoutScope
         locals = locals.merge(scope.locals) if scope
         scope = Object.new
       else
